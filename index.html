@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="timer-container">
+        <h1>Timer</h1>
+        <div class="input-area">
+            <label for="duration">Set duration (minutes):</label>
+            <input type="number" id="duration" value="5" min="1">
+        </div>
+        <div class="timer-display">
+            <span id="time-left">00:00</span>
+        </div>
+        <div class="buttons">
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+    <audio id="bell" src="https://freesound.org/data/previews/253/253177_4486188-lq.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
