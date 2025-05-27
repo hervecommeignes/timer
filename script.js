@@ -4,7 +4,7 @@ const durationInput = document.getElementById('duration');
 const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const resetButton = document.getElementById('reset');
-const bellSound = document.getElementById('bell');
+// const bellSound = document.getElementById('bell');
 
 let countdown; // Variable to store the interval ID
 let timeInSeconds; // Total time in seconds for the countdown
@@ -52,7 +52,8 @@ function startTimer() {
         if (timeInSeconds <= 0) {
             clearInterval(countdown);
             timeLeftDisplay.textContent = "Time's up!";
-            bellSound.play();
+            // bellSound.play();
+            playBeep(); // Call the new beep function
             startButton.disabled = false;
             stopButton.disabled = true;
             durationInput.disabled = false;
@@ -88,6 +89,27 @@ function resetTimer() {
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
+
+// Function to play a beep sound using Web Audio API
+function playBeep() {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!audioCtx) {
+        console.warn("Web Audio API is not supported in this browser.");
+        return;
+    }
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    oscillator.type = 'sine'; // Type of sound wave
+    oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // Frequency in Hz (A4 note)
+    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime); // Volume
+
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + 0.5); // Play for 0.5 seconds
+}
 
 // Initial setup
 resetButton.disabled = true; // Reset button initially disabled
